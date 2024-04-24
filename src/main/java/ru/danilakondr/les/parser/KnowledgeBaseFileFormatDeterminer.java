@@ -15,6 +15,13 @@ public class KnowledgeBaseFileFormatDeterminer {
             "\nÁàçà çíàíèé äëÿ ïðîãðàì ìû \"Ìàëàÿ ÝÑ\" âåðñèè 2.0\n"
                     .getBytes(StandardCharsets.ISO_8859_1);
 
+    /**
+     * Определяет формат потока.
+     *
+     * @param in входной поток
+     * @return формат потока
+     * @throws IOException в случае ошибки при считывании
+     */
     public static KnowledgeBaseFileFormat determineFormat(InputStream in) throws IOException {
         byte[] buffer = new byte[8];
 
