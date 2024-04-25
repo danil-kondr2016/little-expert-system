@@ -1,6 +1,6 @@
 package ru.danilakondr.les.parser;
 
-public enum KnowledgeBaseFileFormat {
+public enum MKBFileFormat {
     MKB_INVALID,
     MKB_CP1251,
     MKB_UTF8,
