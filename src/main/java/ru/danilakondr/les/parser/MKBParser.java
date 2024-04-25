@@ -85,6 +85,11 @@ public class MKBParser {
         this.scanner = scanner;
     }
 
+    /**
+     * Парсит входной поток данных. Для этого используется класс
+     * Scanner.
+     * @return база знаний
+     */
     public KnowledgeBase parse() {
         KnowledgeBase kb = new KnowledgeBase();
 
