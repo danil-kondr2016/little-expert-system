@@ -5,11 +5,13 @@ import java.util.Map;
 
 public class Hypothesis {
     private final String name;
+    private final float pApriori;
 
     private final Map<Integer, ProbabilityPair> answers;
 
-    public Hypothesis(String name) {
+    public Hypothesis(String name, float pApriori) {
         this.name = name;
+        this.pApriori = pApriori;
         this.answers = new HashMap<>();
     }
 
