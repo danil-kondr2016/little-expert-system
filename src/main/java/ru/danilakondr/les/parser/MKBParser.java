@@ -144,9 +144,8 @@ public class MKBParser {
                 h.putAnswer(question, yes, no);
             }
             this.lineIndex++;
+            kb.addHypothesis(h);
         }
-
-        kb.addHypothesis(h);
     }
 
 }
