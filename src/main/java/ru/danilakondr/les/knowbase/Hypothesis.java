@@ -19,6 +19,10 @@ public class Hypothesis {
         return name;
     }
 
+    public float pApriori() {
+        return pApriori;
+    }
+
     public void putAnswer(int question, float yes, float no) {
         answers.put(question, new ProbabilityPair(yes, no));
     }
