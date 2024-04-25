@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public class MKBFormatDeterminer {
+public class KnowledgeBaseFileFormatDeterminer {
     /*
      * Изначально строка закодирована в CP1251, но поскольку средствами
      * Java такую кодировку включить не получается, приходится сначала
@@ -21,15 +21,15 @@ public class MKBFormatDeterminer {
      * @return формат потока
      * @throws IOException в случае ошибки при считывании
      */
-    public static MKBFileFormat determineFormat(InputStream in) throws IOException {
+    public static KnowledgeBaseFileFormat determineFormat(InputStream in) throws IOException {
         byte[] buffer = new byte[8];
 
         int nRead = in.read(buffer, 0, 2);
         if (nRead < 2)
-            return MKBFileFormat.MKB_INVALID;
+            return KnowledgeBaseFileFormat.INVALID;
 
         if (buffer[0] == 0x0D && buffer[1] == 0x0A)
-            return MKBFileFormat.MKB_CP1251;
+            return KnowledgeBaseFileFormat.MKB_CP1251;
 
         /*
          * У Бухнина в бинарниках (исходники он не хочет показывать, потому что
@@ -40,32 +40,32 @@ public class MKBFormatDeterminer {
             byte[] buf2 = new byte[BUKHNIN_MES_20.length];
             nRead = in.read(buf2);
             if (nRead < buf2.length)
-                return MKBFileFormat.MKB_INVALID;
+                return KnowledgeBaseFileFormat.INVALID;
             for (int i = 0; i < buf2.length; i++)
                 if (buf2[i] != BUKHNIN_MES_20[i])
-                    return MKBFileFormat.MKB_INVALID;
-            return MKBFileFormat.MKB_BUKHNIN_ENCODED;
+                    return KnowledgeBaseFileFormat.INVALID;
+            return KnowledgeBaseFileFormat.MKB_BUKHNIN_ENCODED;
         }
 
         if (buffer[0] == '{')
-            return MKBFileFormat.MKB_JSON;
+            return KnowledgeBaseFileFormat.JSON;
 
         if (buffer[0] == (byte)0xEF && buffer[1] == (byte)0xBB) {
             nRead = in.read(buffer, 2, 1);
             if (nRead == 0)
-                return MKBFileFormat.MKB_INVALID;
+                return KnowledgeBaseFileFormat.INVALID;
             if (buffer[2] != (byte)0xBF)
-                return MKBFileFormat.MKB_CP1251;
+                return KnowledgeBaseFileFormat.MKB_CP1251;
 
             nRead = in.read(buffer, 3, 1);
             if (nRead == 0)
-                return MKBFileFormat.MKB_INVALID;
+                return KnowledgeBaseFileFormat.INVALID;
             if (buffer[3] == '{')
-                return MKBFileFormat.MKB_JSON;
+                return KnowledgeBaseFileFormat.JSON;
 
-            return MKBFileFormat.MKB_UTF8;
+            return KnowledgeBaseFileFormat.MKB_UTF8;
         }
 
-        return MKBFileFormat.MKB_INVALID;
+        return KnowledgeBaseFileFormat.INVALID;
     }
 }
