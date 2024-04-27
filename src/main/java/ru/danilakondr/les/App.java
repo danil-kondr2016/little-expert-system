@@ -31,7 +31,7 @@ public class App
         System.out.println("Hypotheses: ");
         kbTest.getHypotheses().forEach((h) -> {
             System.out.println("  Name: " + h.name());
-            System.out.println("  Probability a priori: " + h.pApriori());
+            System.out.println("  Prior probability: " + h.pPrior());
             System.out.println("  Question references: ");
             for (int i = 0; i < kbTest.getQuestions().size(); i++) {
                 ProbabilityPair p = h.getAnswer(i);

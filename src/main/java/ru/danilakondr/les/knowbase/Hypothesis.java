@@ -13,18 +13,18 @@ import java.util.Map;
  */
 public class Hypothesis {
     private final String name;
-    private final float pApriori;
+    private final float pPrior;
 
     private final Map<Integer, ProbabilityPair> answers;
 
     /**
      * Конструктор гипотезы.
      * @param name имя
-     * @param pApriori априорная вероятность
+     * @param pPrior априорная вероятность
      */
-    public Hypothesis(String name, float pApriori) {
+    public Hypothesis(String name, float pPrior) {
         this.name = name;
-        this.pApriori = pApriori;
+        this.pPrior = pPrior;
         this.answers = new HashMap<>();
     }
 
@@ -38,8 +38,8 @@ public class Hypothesis {
     /**
      * Получить априорную вероятность.
      */
-    public float pApriori() {
-        return pApriori;
+    public float pPrior() {
+        return pPrior;
     }
 
     /**
