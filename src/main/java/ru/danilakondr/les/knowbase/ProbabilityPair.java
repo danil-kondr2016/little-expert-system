@@ -3,8 +3,14 @@ package ru.danilakondr.les.knowbase;
 import java.util.Objects;
 
 /**
- * Пара вероятностей: вероятность P<sub>y</sub> = P(E/Y) и P<sub>n</sub> =
- * P(E/!Y).
+ * Пара вероятностей.
+ *
+ * <p> Для каждого вопроса известна вероятность P<sub>y</sub> и P<sub>n</sub>.
+ * Вероятность P<sub>y</sub> = P(E/H), то есть, вероятность того, что гипотеза
+ * верна при условии, что пользователь ответил "да". Вероятность P<sub>n</sub> =
+ * P(E/!H), то есть, вероятность того, что гипотеза верна при условии, что
+ * пользователь ответил "нет".
+ *
  */
 public class ProbabilityPair {
     private final float yes, no;
