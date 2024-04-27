@@ -56,7 +56,7 @@ public class Hypothesis {
      * Получить пару вероятностей по заданному вопросу.
      * @param question номер вопроса
      */
-    public ProbabilityPair getAnswer(int question) {
+    public ProbabilityPair getAnswerPair(int question) {
         return answers.get(question);
     }
 }
