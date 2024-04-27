@@ -4,7 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Гипотеза.
+ * Гипотеза. Модель соответствует Малой экспертной системе 2.0.
+ *
+ * <p> Для каждой гипотезы известно название, отображаемое пользователю,
+ * её априорная вероятность P и пары вероятностей для всех указанных вопросов.
+ *
+ * @see ProbabilityPair
  */
 public class Hypothesis {
     private final String name;
