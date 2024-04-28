@@ -35,7 +35,7 @@ public class LittleExpertSystem {
     public void setLevel(float yes, float no) {
         this.yesLevel = yes;
         this.noLevel = no;
-        this.dunno = no + (yes - no) / 2.0f;
+        this.dunno = (yes + no) / 2.0f;
     }
 
     public float[] getValues() {
@@ -120,8 +120,10 @@ public class LittleExpertSystem {
             float pE = posteriorYes(values[i], p.yes(), p.no());
             float pNotE = posteriorNo(values[i], p.yes(), p.no());
 
-            if (normConfidence >= dunno)
-                values[i] = values[i] + (pE - values[i]) * (normConfidence - dunno);
+            if (normConfidence == 0)
+                return;
+            else if (normConfidence > 0)
+                values[i] = values[i] + (pE - values[i]) * (normConfidence);
             else
                 values[i] = values[i] + (values[i] - pNotE) * (dunno - normConfidence);
         }
