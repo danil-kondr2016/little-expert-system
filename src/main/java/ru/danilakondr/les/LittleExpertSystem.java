@@ -6,6 +6,27 @@ import ru.danilakondr.les.knowbase.ProbabilityPair;
 
 import java.util.BitSet;
 
+/**
+ * Главный класс Малой экспертной системы.
+ * <p>
+ * Малая экспертная система в основе своей использует теорему Байеса для
+ * подсчёта вероятностей исходов. После запуска система задаёт вопрос и получает
+ * ответ в виде уровня уверенности - по умолчанию от -5 до 5.
+ * <p>
+ * После принятия ответа вероятности пересчитываются следующим образом.
+ * Подсчитываются два значения вероятности:
+ * <p>P(H/E) = P*Py / (P*Py + (1-P)*Pn)</p>
+ * <p>P(H/!E) = P*(1-Py)/(P*(1-Py) + (1-P)*(1-Pn)</p>
+ * <p>
+ * Далее новое значение интерполируется в зависимости от уровня уверенности:
+ * если уровень меньше среднего (уровень "не знаю"), то он интерполируется в
+ * сторону P(H/!E), иначе - в сторону P(H/E).
+ * <p>
+ *     <strong>NB: </strong>
+ * Выбор вопроса на данный момент осуществляется по порядку, однако в
+ * оригинальной Малой экспертной системе 2.0 используется другой способ,
+ * который каким-либо образом основан на значениях вероятностей в базе знаний.
+ */
 public class LittleExpertSystem {
     private KnowledgeBase kb = null;
     private float[] values = null;
@@ -19,6 +40,10 @@ public class LittleExpertSystem {
         this.used = new BitSet();
     }
 
+    /**
+     * Загрузить базу знаний.
+     * @param kb база знаний
+     */
     public void loadKnowledgeBase(KnowledgeBase kb) {
         this.kb = kb;
         this.used.clear();
@@ -33,11 +58,16 @@ public class LittleExpertSystem {
     }
 
     public void setLevel(float yes, float no) {
+        if (yes < no)
+            throw new IllegalArgumentException("Yes level is smaller than no level");
         this.yesLevel = yes;
         this.noLevel = no;
         this.dunno = (yes + no) / 2.0f;
     }
 
+    /**
+     * Получить значения вероятностей гипотез.
+     */
     public float[] getValues() {
         return values.clone();
     }
