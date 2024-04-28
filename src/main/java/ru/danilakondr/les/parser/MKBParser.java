@@ -3,7 +3,6 @@ package ru.danilakondr.les.parser;
 import ru.danilakondr.les.knowbase.Hypothesis;
 import ru.danilakondr.les.knowbase.KnowledgeBase;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -146,7 +145,7 @@ public class MKBParser {
                 if (question <= 0 && question >= kb.getQuestions().size())
                     throw new InvalidQuestionReferenceException(question, lineIndex);
 
-                h.putAnswer(question, yes, no);
+                h.putAnswerPair(question, yes, no);
             }
             this.lineIndex++;
             kb.addHypothesis(h);

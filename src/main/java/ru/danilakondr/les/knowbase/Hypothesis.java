@@ -48,7 +48,7 @@ public class Hypothesis {
      * @param yes вероятность "да" (P(E/Y))
      * @param no вероятность "нет" (P(E/!Y))
      */
-    public void putAnswer(int question, float yes, float no) {
+    public void putAnswerPair(int question, float yes, float no) {
         answers.put(question, new ProbabilityPair(yes, no));
     }
 
