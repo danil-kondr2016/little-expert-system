@@ -57,6 +57,14 @@ public class LittleExpertSystem {
         this.currentQuestion = 0;
     }
 
+    /**
+     * Установить минимальный и максимальный уровни уверенности. Уровень "да" и
+     * уровень "нет" устанавливаются пользователем. Уровень "не знаю"
+     * устанавливается автоматически как их среднее арифметическое.
+     * @param yes уровень "да"
+     * @param no уровень "нет"
+     * @throws IllegalArgumentException, если уровень "да" меньше уровня "нет".
+     */
     public void setLevel(float yes, float no) {
         if (yes < no)
             throw new IllegalArgumentException("Yes level is smaller than no level");
@@ -72,10 +80,16 @@ public class LittleExpertSystem {
         return values.clone();
     }
 
+    /**
+     * Получить номер текущего вопроса.
+     */
     public int getCurrentQuestion() {
         return currentQuestion;
     }
 
+    /**
+     * Запустить экспертную систему.
+     */
     public void start() {
         if (kb == null)
             throw new NullPointerException("Knowledge base has not been loaded");
@@ -86,6 +100,10 @@ public class LittleExpertSystem {
         running = true;
     }
 
+    /**
+     * Принять ответ на вопрос.
+     * @param confidence уровень уверенности
+     */
     public void answer(float confidence) {
         if (kb == null)
             throw new NullPointerException("Knowledge base has not been loaded");
@@ -99,6 +117,9 @@ public class LittleExpertSystem {
             running = false;
     }
 
+    /**
+     * Остановить экспертную систему.
+     */
     public void stop() {
         if (kb == null)
             throw new NullPointerException("Knowledge base has not been loaded");
@@ -113,10 +134,16 @@ public class LittleExpertSystem {
         return currentQuestion != -1;
     }
 
+    /**
+     * Получить состояние работы экспертной системы.
+     */
     public boolean isRunning() {
         return running;
     }
 
+    /**
+     * Перейти к следующему вопросу.
+     */
     private boolean nextQuestion() {
         used.set(currentQuestion);
         currentQuestion = selectQuestion();
@@ -126,6 +153,10 @@ public class LittleExpertSystem {
         return true;
     }
 
+    /**
+     * Выбрать вопрос.
+     * @return номер следующего вопроса, -1 - если вопрос не найден
+     */
     private int selectQuestion() {
         int firstFree = 0;
 
@@ -140,6 +171,10 @@ public class LittleExpertSystem {
         return firstFree;
     }
 
+    /**
+     * Пересчитать вероятности.
+     * @param normConfidence нормированный уровень уверенности в [-1.0; 1.0]
+     */
     private void recalculate(float normConfidence) {
         for (int i = 0; i < kb.getHypotheses().size(); i++) {
             Hypothesis h = kb.getHypotheses().get(i);
@@ -155,7 +190,7 @@ public class LittleExpertSystem {
             else if (normConfidence > 0)
                 values[i] = values[i] + (pE - values[i]) * (normConfidence);
             else
-                values[i] = values[i] + (values[i] - pNotE) * (dunno - normConfidence);
+                values[i] = values[i] + (values[i] - pNotE) * (-normConfidence);
         }
     }
 
