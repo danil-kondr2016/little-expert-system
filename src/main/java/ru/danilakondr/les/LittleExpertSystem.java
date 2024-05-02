@@ -159,16 +159,40 @@ public class LittleExpertSystem {
      */
     private int selectQuestion() {
         int firstFree = 0;
+        final int nQuestions = kb.getQuestions().size();
+        final int nHypotheses = kb.getHypotheses().size();
 
-        for (; firstFree < kb.getQuestions().size(); firstFree++) {
-            if (!used.get(firstFree))
-                break;
+        float[] ruleValue = new float[nQuestions];
+        for (int hIndex = 0; hIndex < nHypotheses; hIndex++) {
+            Hypothesis h = kb.getHypotheses().get(hIndex);
+
+            for (int qIndex = 1; qIndex < nQuestions; qIndex++) {
+                if (used.get(qIndex))
+                    continue;
+
+                ProbabilityPair p = h.getAnswerPair(qIndex);
+                if (p == null)
+                    continue;
+
+                float py = posteriorYes(values[hIndex], p.yes(), p.no());
+                float pn = posteriorNo(values[hIndex], p.yes(), p.no());
+                ruleValue[qIndex] += Math.abs(py - pn);
+            }
         }
 
-        if (firstFree >= kb.getQuestions().size())
-            firstFree = -1;
+        int maxIndex = -1;
+        float max = 0;
+        for (int i = 0; i < ruleValue.length; i++) {
+            if (max < ruleValue[i]) {
+                max = ruleValue[i];
+                maxIndex = i;
+            }
+        }
 
-        return firstFree;
+        if (maxIndex == -1 || ruleValue[maxIndex] == 0)
+            return -1;
+
+        return maxIndex;
     }
 
     /**
