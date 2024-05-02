@@ -110,7 +110,7 @@ public class LittleExpertSystem {
         if (!running)
             return;
 
-        float normConfidence = (confidence - noLevel) / (yesLevel - noLevel) - 1.0f;
+        float normConfidence = (confidence - dunno) / (yesLevel - noLevel) + 0.5f;
         recalculate(normConfidence);
 
         if (!nextQuestion())
