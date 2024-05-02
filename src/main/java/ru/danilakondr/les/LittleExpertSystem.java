@@ -31,7 +31,7 @@ public class LittleExpertSystem {
     private KnowledgeBase kb = null;
     private float[] values = null;
     private BitSet used;
-    private float yesLevel = -5.0f, noLevel = 5.0f, dunno = 0.0f;
+    private float yesLevel = 5.0f, noLevel = -5.0f, dunno = 0.0f;
     private int currentQuestion;
 
     private boolean running = false;
