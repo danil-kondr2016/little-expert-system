@@ -113,7 +113,7 @@ public class MKBParser {
             this.lineIndex++;
         }
 
-        return comment.toString();
+        return comment.toString().replaceAll("\n$", "");
     }
 
     private void parseQuestions(KnowledgeBase kb) {
