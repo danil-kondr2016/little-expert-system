@@ -20,8 +20,8 @@ public class MKBParserTest
                         "Question 1\r\n" +
                         "Question 2\r\n" +
                         "\r\n" +
-                        "H1, 1,0,1, 2,1,0\r\n" +
-                        "H2, 1,1,0, 2,0,1";
+                        "H1, 0.5, 1,0,1, 2,1,0\r\n" +
+                        "H2, 0.5, 1,1,0, 2,0,1";
 
         Scanner sc = new Scanner(MKB_TEST);
         MKBParser parser = new MKBParser(sc);
@@ -38,8 +38,8 @@ public class MKBParserTest
                         "Question 1\r\n" +
                         "Question 2\r\n" +
                         "\r\n" +
-                        "H1, 1,0,1, 2,1,0\r\n" +
-                        "H2, 1,1,0, 2,0,1";
+                        "H1, 0.5, 1,0,1, 2,1,0\r\n" +
+                        "H2, 0.5, 1,1,0, 2,0,1";
 
         Scanner sc = new Scanner(MKB_TEST);
         MKBParser parser = new MKBParser(sc);
