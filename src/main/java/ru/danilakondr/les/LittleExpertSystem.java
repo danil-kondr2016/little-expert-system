@@ -183,6 +183,9 @@ public class LittleExpertSystem {
         int maxIndex = -1;
         float max = 0;
         for (int i = 0; i < ruleValue.length; i++) {
+            if (used.get(i))
+                continue;
+
             if (max < ruleValue[i]) {
                 max = ruleValue[i];
                 maxIndex = i;
