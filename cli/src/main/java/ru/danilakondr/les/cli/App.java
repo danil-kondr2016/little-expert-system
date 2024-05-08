@@ -1,5 +1,6 @@
-package ru.danilakondr.les;
+package ru.danilakondr.les.cli;
 
+import ru.danilakondr.les.LittleExpertSystem;
 import ru.danilakondr.les.knowbase.KnowledgeBase;
 import ru.danilakondr.les.knowbase.ProbabilityPair;
 import ru.danilakondr.les.parser.MKBParser;
