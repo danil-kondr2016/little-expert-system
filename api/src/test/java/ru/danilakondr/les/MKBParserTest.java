@@ -28,6 +28,21 @@ public class MKBParserTest
         KnowledgeBase kb = parser.parse();
 
         assertEquals("DUMMY_COMMENT", kb.getComment());
+        assertEquals("Questions:", kb.getQuestions().get(0));
+        assertEquals("Question 1", kb.getQuestions().get(1));
+        assertEquals("Question 2", kb.getQuestions().get(2));
+        assertEquals("H1", kb.getHypotheses().get(0).name());
+        assertEquals(0.5, kb.getHypotheses().get(0).pPrior(), 0.01);
+        assertEquals(0, kb.getHypotheses().get(0).getAnswerPair(1).yes(), 0.01);
+        assertEquals(1, kb.getHypotheses().get(0).getAnswerPair(1).no(), 0.01);
+        assertEquals(1, kb.getHypotheses().get(0).getAnswerPair(2).yes(), 0.01);
+        assertEquals(0, kb.getHypotheses().get(0).getAnswerPair(2).no(), 0.01);
+        assertEquals("H2", kb.getHypotheses().get(1).name());
+        assertEquals(0.5, kb.getHypotheses().get(1).pPrior(), 0.01);
+        assertEquals(1, kb.getHypotheses().get(1).getAnswerPair(1).yes(), 0.01);
+        assertEquals(0, kb.getHypotheses().get(1).getAnswerPair(1).no(), 0.01);
+        assertEquals(0, kb.getHypotheses().get(1).getAnswerPair(2).yes(), 0.01);
+        assertEquals(1, kb.getHypotheses().get(1).getAnswerPair(2).no(), 0.01);
     }
 
     @Test
@@ -46,5 +61,8 @@ public class MKBParserTest
         KnowledgeBase kb = parser.parse();
 
         assertEquals("", kb.getComment());
+        assertEquals("Questions:", kb.getQuestions().get(0));
+        assertEquals("Question 1", kb.getQuestions().get(1));
+        assertEquals("Question 2", kb.getQuestions().get(2));
     }
 }
