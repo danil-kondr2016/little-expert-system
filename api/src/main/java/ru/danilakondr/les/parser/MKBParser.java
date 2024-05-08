@@ -138,9 +138,17 @@ public class MKBParser {
             h = new Hypothesis(name, pApriori);
 
             for (int i = 2; i < tokens.length; i += 3) {
-                int question = Integer.parseInt(tokens[i]);
-                float yes = Float.parseFloat(tokens[i+1]);
-                float no = Float.parseFloat(tokens[i+2]);
+                int question;
+                float yes, no;
+
+                try {
+                    question = Integer.parseInt(tokens[i]);
+                    yes = Float.parseFloat(tokens[i+1]);
+                    no = Float.parseFloat(tokens[i+2]);
+                }
+                catch (NumberFormatException e) {
+                    throw new MKBSyntaxError(lineIndex);
+                }
 
                 if (question <= 0 && question >= kb.getQuestions().size())
                     throw new InvalidQuestionReferenceException(question, lineIndex);
