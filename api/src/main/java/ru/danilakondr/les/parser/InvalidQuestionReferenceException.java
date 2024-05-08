@@ -13,6 +13,7 @@ public class InvalidQuestionReferenceException extends IllegalArgumentException 
         return String.format("Invalid reference to question #%d at line %d", question, lineNumber);
     }
 
+    // FIXME добавить локализацию
     @Override
     public String getLocalizedMessage() {
         return getMessage();
