@@ -1,0 +1,107 @@
+package ru.danilakondr.les.parser;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import ru.danilakondr.les.knowbase.KnowledgeBase;
+
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.Scanner;
+
+/**
+ * Класс-читатель баз знаний в различных форматах. Поддерживается три формата:
+ * JSON, YAML, MKB Малой ЭС 2.0.
+ * <p>
+ * Формат &laquo;шифрованных&raquo; файлов Малой ЭС 2.0 не поддерживается:
+ * выбрасывается исключение {@code IllegalArgumentException}.
+ */
+public class KnowledgeBaseReader {
+    private File f;
+    private byte[] buffer;
+    private InputStream is;
+    private Charset cs;
+    private Reader reader;
+
+    public KnowledgeBaseReader(File f) throws IOException {
+        this.f = f;
+        this.is = Files.newInputStream(f.toPath());
+    }
+
+    public KnowledgeBaseReader(InputStream is) {
+        this.is = is;
+    }
+
+    public KnowledgeBaseReader(InputStream is, Charset cs) {
+        this.is = is;
+        this.cs = cs;
+    }
+
+    public KnowledgeBaseReader(byte[] b) {
+        this.buffer = b;
+        this.is = new ByteArrayInputStream(b);
+    }
+
+    public KnowledgeBaseReader(byte[] b, Charset cs) {
+        this.buffer = b;
+        this.is = new ByteArrayInputStream(b);
+        this.cs = cs;
+    }
+
+    public KnowledgeBase read() throws IOException {
+        if (!is.markSupported())
+            throw new IllegalArgumentException("Input does not support rewinding");
+
+        KBFormat fmt = KBFormat.INVALID;
+        if (f != null) {
+            try (FileInputStream fis = new FileInputStream(f)) {
+                fmt = KBFormatAnalyzer.getFormat(fis);
+            }
+        }
+        else if (buffer != null) {
+            try (ByteArrayInputStream bis = new ByteArrayInputStream(buffer)) {
+                fmt = KBFormatAnalyzer.getFormat(bis);
+            }
+        }
+
+        switch (fmt) {
+            case LES_JSON:
+                reader = new InputStreamReader(is,
+                        cs == null ? StandardCharsets.UTF_8 : cs);
+                return readJson();
+            case LES_YAML:
+                reader = new InputStreamReader(is,
+                        cs == null ? StandardCharsets.UTF_8 : cs);
+                return readYaml();
+            case MES_2_0:
+                reader = new InputStreamReader(is,
+                        cs == null ? Charset.forName("cp1251") : cs);
+                return readMkb();
+            case MES_2_0_OBFUSCATED:
+                throw new IllegalArgumentException("This file is written in " +
+                        "obfuscated MKB file format developed by Alexey " +
+                        "Bukhnin. This format is not recommended to use by " +
+                        "original author.");
+        }
+
+        return null;
+    }
+
+    private KnowledgeBase readYaml() throws IOException {
+        YAMLMapper yamlMapper = new YAMLMapper();
+
+        return yamlMapper.readValue(reader, KnowledgeBase.class);
+    }
+
+    private KnowledgeBase readJson() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.readValue(reader, KnowledgeBase.class);
+    }
+
+    private KnowledgeBase readMkb() throws IOException {
+        MKBParser parser = new MKBParser(new Scanner(reader));
+        return parser.parse();
+    }
+}
