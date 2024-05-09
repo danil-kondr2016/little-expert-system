@@ -2,6 +2,11 @@ package ru.danilakondr.les.knowbase;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.*;
+
 /**
  * Пара вероятностей.
  *
@@ -20,7 +25,8 @@ public class ProbabilityPair {
      * @param yes вероятность "да" (P(E/Y))
      * @param no вероятность "нет" (P(E/!Y))
      */
-    public ProbabilityPair(float yes, float no) {
+    @JsonCreator
+    public ProbabilityPair(@JsonProperty("yes") float yes, @JsonProperty("no") float no) {
         this.yes = yes;
         this.no = no;
     }
@@ -28,6 +34,7 @@ public class ProbabilityPair {
     /**
      * Получить вероятность "да".
      */
+    @JsonGetter("yes")
     public float yes() {
         return yes;
     }
@@ -35,6 +42,7 @@ public class ProbabilityPair {
     /**
      * Получить вероятность "нет".
      */
+    @JsonGetter("no")
     public float no() {
         return no;
     }

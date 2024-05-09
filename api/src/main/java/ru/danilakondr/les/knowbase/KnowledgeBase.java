@@ -1,5 +1,10 @@
 package ru.danilakondr.les.knowbase;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +22,21 @@ public class KnowledgeBase {
         hypotheses = new ArrayList<>();
     }
 
+    @JsonCreator
+    public KnowledgeBase(
+            @JsonProperty("comment") String comment,
+            @JsonProperty("questions") List<String> questions,
+            @JsonProperty("hypotheses") List<Hypothesis> hypotheses)
+    {
+        this.comment = comment;
+        this.questions = questions;
+        this.hypotheses = hypotheses;
+    }
+
     /**
      * Получить комментарий.
      */
+    @JsonGetter("comment")
     public String getComment() {
         return comment;
     }
@@ -27,6 +44,7 @@ public class KnowledgeBase {
     /**
      * Установить комментарий.
      */
+    @JsonSetter("comment")
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -34,6 +52,7 @@ public class KnowledgeBase {
     /**
      * Получить список вопросов.
      */
+    @JsonGetter("questions")
     public List<String> getQuestions() {
         return questions;
     }
@@ -41,6 +60,7 @@ public class KnowledgeBase {
     /**
      * Получить список гипотез.
      */
+    @JsonGetter("hypotheses")
     public List<Hypothesis> getHypotheses() {
         return hypotheses;
     }

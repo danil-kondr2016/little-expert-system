@@ -1,6 +1,9 @@
 package ru.danilakondr.les.knowbase;
 
+import com.fasterxml.jackson.annotation.*;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,15 +25,24 @@ public class Hypothesis {
      * @param name имя
      * @param pPrior априорная вероятность
      */
-    public Hypothesis(String name, float pPrior) {
+    public Hypothesis(@JsonProperty("name") String name, @JsonProperty("pPrior") float pPrior) {
         this.name = name;
         this.pPrior = pPrior;
         this.answers = new HashMap<>();
     }
 
+    @JsonCreator
+    public Hypothesis(@JsonProperty("name") String name, @JsonProperty("pPrior") float pPrior, @JsonProperty("answers") HashMap<String, ProbabilityPair> answers) {
+        this.name = name;
+        this.pPrior = pPrior;
+        this.answers = new HashMap<>();
+        answers.forEach((k, v) -> this.answers.put(Integer.parseInt(k), v));
+    }
+
     /**
      * Получить название.
      */
+    @JsonGetter("name")
     public String name() {
         return name;
     }
@@ -38,6 +50,7 @@ public class Hypothesis {
     /**
      * Получить априорную вероятность.
      */
+    @JsonGetter("pPrior")
     public float pPrior() {
         return pPrior;
     }
@@ -58,5 +71,10 @@ public class Hypothesis {
      */
     public ProbabilityPair getAnswerPair(int question) {
         return answers.get(question);
+    }
+
+    @JsonGetter("answers")
+    public Map<Integer, ProbabilityPair> getAnswers() {
+        return answers;
     }
 }
