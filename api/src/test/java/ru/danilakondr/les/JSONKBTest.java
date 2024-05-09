@@ -1,13 +1,13 @@
 package ru.danilakondr.les;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.PrettyPrinter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import ru.danilakondr.les.knowbase.KnowledgeBase;
 import ru.danilakondr.les.parser.KnowledgeBaseReader;
 import ru.danilakondr.les.parser.MKBParser;
