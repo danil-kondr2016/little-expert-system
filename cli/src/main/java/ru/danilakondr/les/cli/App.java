@@ -6,12 +6,10 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.ParseException;
 import ru.danilakondr.les.LittleExpertSystem;
 import ru.danilakondr.les.knowbase.KnowledgeBase;
-import ru.danilakondr.les.knowbase.ProbabilityPair;
-import ru.danilakondr.les.parser.KnowledgeBaseReader;
+import ru.danilakondr.les.knowbase.KnowledgeBaseReader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class App
