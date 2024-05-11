@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import ru.danilakondr.les.knowbase.KnowledgeBase;
-import ru.danilakondr.les.parser.MKBParser;
+import ru.danilakondr.les.mkb.MKBParser;
 
 import java.util.Scanner;
 

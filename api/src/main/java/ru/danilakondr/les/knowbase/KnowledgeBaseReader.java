@@ -1,8 +1,9 @@
-package ru.danilakondr.les.parser;
+package ru.danilakondr.les.knowbase;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import ru.danilakondr.les.knowbase.KnowledgeBase;
+import ru.danilakondr.les.LocalizedMessages;
+import ru.danilakondr.les.mkb.MKBParser;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -79,10 +80,7 @@ public class KnowledgeBaseReader {
                         cs == null ? Charset.forName("cp1251") : cs);
                 return readMkb();
             case MES_2_0_OBFUSCATED:
-                throw new IllegalArgumentException("This file is written in " +
-                        "obfuscated MKB file format developed by Alexey " +
-                        "Bukhnin. This format is not recommended to use by " +
-                        "original author.");
+                throw new IllegalArgumentException(LocalizedMessages.mkbObfuscatedNotice());
         }
 
         return null;

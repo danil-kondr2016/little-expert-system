@@ -1,4 +1,4 @@
-package ru.danilakondr.les.parser;
+package ru.danilakondr.les.knowbase;
 
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;

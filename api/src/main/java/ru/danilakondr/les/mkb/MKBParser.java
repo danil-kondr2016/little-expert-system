@@ -1,7 +1,8 @@
-package ru.danilakondr.les.parser;
+package ru.danilakondr.les.mkb;
 
 import ru.danilakondr.les.knowbase.Hypothesis;
 import ru.danilakondr.les.knowbase.KnowledgeBase;
+import ru.danilakondr.les.knowbase.InvalidQuestionReferenceException;
 
 import java.util.Scanner;
 
@@ -148,8 +149,9 @@ public class MKBParser {
                     throw new MKBSyntaxError(lineIndex);
                 }
 
-                if (question <= 0 && question >= kb.getQuestions().size())
+                if (question <= 0 && question >= kb.getQuestions().size()) {
                     throw new InvalidQuestionReferenceException(question, lineIndex);
+                }
 
                 h.putAnswerPair(question, yes, no);
             }

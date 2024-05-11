@@ -1,4 +1,4 @@
-package ru.danilakondr.les.parser;
+package ru.danilakondr.les.knowbase;
 
 public enum KBFormat {
     INVALID,

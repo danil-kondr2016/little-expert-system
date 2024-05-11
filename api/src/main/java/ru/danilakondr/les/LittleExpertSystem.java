@@ -68,7 +68,7 @@ public class LittleExpertSystem {
      */
     public void setLevel(float yes, float no) {
         if (yes < no)
-            throw new IllegalArgumentException("Yes level is smaller than no level");
+            throw new IllegalArgumentException(LocalizedMessages.yesSmallerThanNo());
         this.yesLevel = yes;
         this.noLevel = no;
         this.dunno = (yes + no) / 2.0f;
@@ -93,7 +93,7 @@ public class LittleExpertSystem {
      */
     public void start() {
         if (kb == null)
-            throw new NullPointerException("Knowledge base has not been loaded");
+            throw new IllegalStateException(LocalizedMessages.knowledgeBaseHasNotBeenLoaded());
 
         if (!nextQuestion())
             return;
@@ -107,7 +107,7 @@ public class LittleExpertSystem {
      */
     public void answer(float confidence) {
         if (kb == null)
-            throw new NullPointerException("Knowledge base has not been loaded");
+            throw new IllegalStateException(LocalizedMessages.knowledgeBaseHasNotBeenLoaded());
         if (!running)
             return;
 
@@ -123,14 +123,14 @@ public class LittleExpertSystem {
      */
     public void stop() {
         if (kb == null)
-            throw new NullPointerException("Knowledge base has not been loaded");
+            throw new IllegalStateException(LocalizedMessages.knowledgeBaseHasNotBeenLoaded());
 
         running = false;
     }
 
     public boolean hasAnyQuestions() {
         if (kb == null)
-            throw new NullPointerException("Knowledge base has not been loaded");
+            throw new IllegalStateException(LocalizedMessages.knowledgeBaseHasNotBeenLoaded());
 
         return currentQuestion != -1;
     }

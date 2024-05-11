@@ -1,4 +1,7 @@
-package ru.danilakondr.les.parser;
+package ru.danilakondr.les.knowbase;
+
+import ru.danilakondr.les.LocalizedMessages;
+import ru.danilakondr.les.OriginalMessages;
 
 public class InvalidQuestionReferenceException extends IllegalArgumentException {
     private final int question, lineNumber;
@@ -8,14 +11,17 @@ public class InvalidQuestionReferenceException extends IllegalArgumentException 
         this.lineNumber = lineNumber;
     }
 
-    @Override
-    public String getMessage() {
-        return String.format("Invalid reference to question #%d at line %d", question, lineNumber);
+    public InvalidQuestionReferenceException(int question) {
+        this(question, -1);
     }
 
-    // FIXME добавить локализацию
+    @Override
+    public String getMessage() {
+        return OriginalMessages.invalidQuestionReference(question, lineNumber);
+    }
+
     @Override
     public String getLocalizedMessage() {
-        return getMessage();
+        return LocalizedMessages.invalidQuestionReference(question, lineNumber);
     }
 }
