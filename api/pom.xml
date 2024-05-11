@@ -6,15 +6,15 @@
     <parent>
         <groupId>ru.danilakondr</groupId>
         <artifactId>little-expert-system</artifactId>
-        <version>0.1.1</version>
+        <version>0.2.0</version>
     </parent>
 
     <groupId>ru.danilakondr.les</groupId>
     <artifactId>api</artifactId>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
