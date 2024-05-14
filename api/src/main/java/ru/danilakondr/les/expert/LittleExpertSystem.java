@@ -1,5 +1,6 @@
-package ru.danilakondr.les;
+package ru.danilakondr.les.expert;
 
+import ru.danilakondr.les.LocalizedMessages;
 import ru.danilakondr.les.knowbase.Hypothesis;
 import ru.danilakondr.les.knowbase.KnowledgeBase;
 import ru.danilakondr.les.knowbase.ProbabilityPair;
@@ -31,14 +32,16 @@ import java.util.BitSet;
 public class LittleExpertSystem {
     private KnowledgeBase kb = null;
     private float[] values = null;
-    private BitSet used;
+    private final BitSet used;
     private float yesLevel = 5.0f, noLevel = -5.0f, dunno = 0.0f;
     private int currentQuestion;
+    private Protocol protocol;
 
     private boolean running = false;
 
     public LittleExpertSystem() {
         this.used = new BitSet();
+        this.protocol = new Protocol();
     }
 
     /**
@@ -95,6 +98,10 @@ public class LittleExpertSystem {
         if (kb == null)
             throw new IllegalStateException(LocalizedMessages.knowledgeBaseHasNotBeenLoaded());
 
+        protocol.setYesLevel(yesLevel);
+        protocol.setNoLevel(noLevel);
+        protocol.begin(kb);
+
         if (!nextQuestion())
             return;
 
@@ -111,6 +118,8 @@ public class LittleExpertSystem {
         if (!running)
             return;
 
+        protocol.addRecord(currentQuestion, confidence);
+
         float normConfidence = (confidence - dunno) / (yesLevel - noLevel) + 0.5f;
         recalculate(normConfidence);
 
@@ -124,6 +133,9 @@ public class LittleExpertSystem {
     public void stop() {
         if (kb == null)
             throw new IllegalStateException(LocalizedMessages.knowledgeBaseHasNotBeenLoaded());
+
+        protocol.transferResults(values);
+        protocol.end();
 
         running = false;
     }
