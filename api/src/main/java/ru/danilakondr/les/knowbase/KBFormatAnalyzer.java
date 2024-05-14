@@ -16,7 +16,7 @@ public class KBFormatAnalyzer {
         if (tryYAML(is))
             return KBFormat.LES_YAML;
 
-        KBFormat lesFmt = getFormat(is);
+        KBFormat lesFmt = tryLES(is);
         is.close();
         return lesFmt;
     }
