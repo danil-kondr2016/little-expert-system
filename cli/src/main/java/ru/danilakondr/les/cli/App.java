@@ -4,7 +4,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.ParseException;
-import ru.danilakondr.les.LittleExpertSystem;
+import ru.danilakondr.les.expert.LittleExpertSystem;
 import ru.danilakondr.les.knowbase.KnowledgeBase;
 import ru.danilakondr.les.knowbase.KnowledgeBaseReader;
 
