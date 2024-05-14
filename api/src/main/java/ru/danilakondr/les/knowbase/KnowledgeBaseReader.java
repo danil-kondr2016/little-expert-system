@@ -21,7 +21,7 @@ import java.util.Scanner;
 public class KnowledgeBaseReader {
     private File f;
     private byte[] buffer;
-    private InputStream is;
+    private final InputStream is;
     private Charset cs;
     private Reader reader;
 
