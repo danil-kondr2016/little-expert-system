@@ -35,7 +35,7 @@ public class LittleExpertSystem {
     private final BitSet used;
     private float yesLevel = 5.0f, noLevel = -5.0f, dunno = 0.0f;
     private int currentQuestion;
-    private Protocol protocol;
+    private final Protocol protocol;
 
     private boolean running = false;
 
@@ -59,6 +59,17 @@ public class LittleExpertSystem {
         }
 
         this.currentQuestion = 0;
+    }
+
+    public int getCountOfHypotheses() {
+        if (kb == null)
+            return 0;
+
+        return kb.getHypotheses().size();
+    }
+
+    public Protocol getProtocol() {
+        return protocol;
     }
 
     /**
@@ -240,5 +251,33 @@ public class LittleExpertSystem {
 
     private float posteriorNo(float pPrior, float pY, float pN) {
         return posteriorYes(pPrior, 1 - pY, 1 - pN);
+    }
+
+    public float getHypothesisValue(int index) {
+        if (kb == null)
+            return 0;
+
+        return values[index];
+    }
+
+    public String getHypothesisName(int index) {
+        if (kb == null)
+            return null;
+
+        return kb.getHypotheses().get(index).name();
+    }
+
+    public String getQuestion(int index) {
+        if (kb == null)
+            return null;
+
+        return kb.getQuestions().get(index);
+    }
+
+    public int getCountOfQuestions() {
+        if (kb == null)
+            return 0;
+
+        return kb.getQuestions().size();
     }
 }
