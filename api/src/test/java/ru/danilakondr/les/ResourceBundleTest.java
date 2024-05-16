@@ -10,7 +10,7 @@ public class ResourceBundleTest {
     public void resourceBundle() {
         String x = MessageFormat.format(ResourceBundle
                                 .getBundle("LesStrings")
-                                .getString("mkb_invalid_question_reference"),
+                                .getString("parser.invalidQuestionReference"),
                         1, 2);
         System.out.println(x);
     }
