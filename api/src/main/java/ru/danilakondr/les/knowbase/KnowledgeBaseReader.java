@@ -51,19 +51,12 @@ public class KnowledgeBaseReader {
     }
 
     public KnowledgeBase read() throws IOException {
-        if (!is.markSupported())
-            throw new IllegalArgumentException("Input does not support rewinding");
-
         KBFormat fmt = KBFormat.INVALID;
         if (f != null) {
-            try (FileInputStream fis = new FileInputStream(f)) {
-                fmt = KBFormatAnalyzer.getFormat(fis);
-            }
+            fmt = KBFormatAnalyzer.getFormat(f);
         }
         else if (buffer != null) {
-            try (ByteArrayInputStream bis = new ByteArrayInputStream(buffer)) {
-                fmt = KBFormatAnalyzer.getFormat(bis);
-            }
+            fmt = KBFormatAnalyzer.getFormat(buffer);
         }
 
         switch (fmt) {

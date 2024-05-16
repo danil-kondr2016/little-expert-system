@@ -4,21 +4,27 @@ import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class KBFormatAnalyzer {
-    public static KBFormat getFormat(InputStream is) throws IOException {
-        if (tryJSON(is))
+    public static KBFormat getFormat(File f) throws IOException {
+        if (tryJSON(new FileInputStream(f)))
             return KBFormat.LES_JSON;
-        if (tryYAML(is))
+        if (tryYAML(new FileInputStream(f)))
             return KBFormat.LES_YAML;
 
-        KBFormat lesFmt = tryLES(is);
-        is.close();
-        return lesFmt;
+        return tryLES(new FileInputStream(f));
+    }
+
+    public static KBFormat getFormat(byte[] buffer) throws IOException {
+        if (tryJSON(new ByteArrayInputStream(buffer)))
+            return KBFormat.LES_JSON;
+        if (tryYAML(new ByteArrayInputStream(buffer)))
+            return KBFormat.LES_YAML;
+
+        return tryLES(new ByteArrayInputStream(buffer));
     }
 
     private static boolean tryJSON(InputStream is) throws IOException {
@@ -33,7 +39,6 @@ public class KBFormatAnalyzer {
                 return false;
 
             while (parser.nextToken() != null);
-            parser.close();
             return true;
         } catch (JsonParseException e) {
             return false;
@@ -52,7 +57,6 @@ public class KBFormatAnalyzer {
                 return false;
 
             while (parser.nextToken() != null);
-            parser.close();
             return true;
         } catch (JsonParseException e) {
             return false;
@@ -83,7 +87,7 @@ public class KBFormatAnalyzer {
 
             return KBFormat.MES_2_0_OBFUSCATED;
         }
-
+        is.close();
         return KBFormat.INVALID;
     }
 }
