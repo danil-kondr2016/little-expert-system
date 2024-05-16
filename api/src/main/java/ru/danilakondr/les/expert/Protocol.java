@@ -11,10 +11,12 @@ import java.util.List;
 
 public class Protocol {
     static class Entry {
+        public final int questionIndex;
         public final String question;
         public final float confidence;
 
-        public Entry(String question, float confidence) {
+        public Entry(int questionIndex, String question, float confidence) {
+            this.questionIndex = questionIndex;
             this.question = question;
             this.confidence = confidence;
         }
@@ -84,7 +86,16 @@ public class Protocol {
     }
 
     public void addRecord(int question, float confidence) {
-        entries.add(new Entry(currentKb.getQuestions().get(question), confidence));
+        entries.add(new Entry(question, currentKb.getQuestions().get(question), confidence));
+    }
+
+    public int getRecordCount() {
+        return entries.size();
+    }
+
+    public String getRecordString(int index) {
+        Entry e = entries.get(index);
+        return String.format("%d (%.5f) %s", e.questionIndex, e.confidence, e.question);
     }
 
     public String toPlainText() {
