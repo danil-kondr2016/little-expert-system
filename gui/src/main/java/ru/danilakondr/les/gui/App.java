@@ -1,9 +1,6 @@
 package ru.danilakondr.les.gui;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.*;
 import ru.danilakondr.les.knowbase.KnowledgeBase;
 import ru.danilakondr.les.knowbase.KnowledgeBaseReader;
 
@@ -18,19 +15,32 @@ public class App {
 
     public void parseCommandLine(String[] args) throws IOException, ParseException {
         CommandLineParser parser = new DefaultParser();
-        CommandLine cmd = parser.parse(null, args);
+        CommandLine cmd = parser.parse(new Options(), args);
+        if (cmd.getArgs().length == 0) {
+            return;
+        }
         String input = cmd.getArgs()[0];
 
         KnowledgeBaseReader reader = new KnowledgeBaseReader(new File(input));
         this.kb = reader.read();
     }
 
+    public void run() {
+        System.out.println("Run");
+        ExpertSystemForm form = new ExpertSystemForm();
+        if (kb != null)
+            form.loadKnowledgeBase(kb);
+        form.show();
+        System.out.println("End");
+    }
+
     public static void main(String[] args) {
-        setSystemLookAndFeel();
+        //setSystemLookAndFeel();
         App app = new App();
 
         try {
             app.parseCommandLine(args);
+            app.run();
         }
         catch (IOException e) {
             guiDie("Ошибка при открытии файла: " + e.getLocalizedMessage());
@@ -41,7 +51,6 @@ public class App {
         catch (IllegalArgumentException e) {
             guiDie("Неверный аргумент: " + e.getLocalizedMessage());
         }
-
     }
 
     private static void guiDie(String message) {
