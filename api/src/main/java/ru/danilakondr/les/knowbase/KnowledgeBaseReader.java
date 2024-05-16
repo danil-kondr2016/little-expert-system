@@ -21,22 +21,13 @@ import java.util.Scanner;
 public class KnowledgeBaseReader {
     private File f;
     private byte[] buffer;
-    private final InputStream is;
+    private InputStream is;
     private Charset cs;
     private Reader reader;
 
     public KnowledgeBaseReader(File f) throws IOException {
         this.f = f;
         this.is = Files.newInputStream(f.toPath());
-    }
-
-    public KnowledgeBaseReader(InputStream is) {
-        this.is = is;
-    }
-
-    public KnowledgeBaseReader(InputStream is, Charset cs) {
-        this.is = is;
-        this.cs = cs;
     }
 
     public KnowledgeBaseReader(byte[] b) {
