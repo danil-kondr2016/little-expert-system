@@ -19,6 +19,5 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET LittleExpertSystem PROPERTY CXX_STANDARD 20)
 endif()
 
-# TODO: Добавьте тесты и целевые объекты, если это необходимо.
-find_package(ICU 71.0 REQUIRED uc)
+find_package(ICU REQUIRED COMPONENTS uc)
 target_link_libraries(LittleExpertSystem ICU::uc)
