@@ -21,3 +21,17 @@ endif()
 
 find_package(ICU REQUIRED COMPONENTS uc)
 target_link_libraries(LittleExpertSystem ICU::uc)
+
+# Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
+IF (MSVC)
+	IF (CMAKE_MAJOR_VERSION LESS 3)
+		MESSAGE(WARNING "CMake version 3.0 or newer is required use build variable TARGET_FILE")
+	ELSE()
+		ADD_CUSTOM_COMMAND(
+			TARGET LittleExpertSystem
+			POST_BUILD
+			COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\utf8.manifest\" -inputresource:\"$<TARGET_FILE:LittleExpertSystem>\"\;\#1 -outputresource:\"$<TARGET_FILE:LittleExpertSystem>\"\;\#1
+			COMMENT "Adding display aware manifest..." 
+		)
+	ENDIF()
+ENDIF(MSVC)
