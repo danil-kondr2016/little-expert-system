@@ -82,7 +82,7 @@ void LittleExpertSystem::recalculate(double normLevel)
 		if (normLevel > 0)
 			H.pPrior = P + (P_E - P) * normLevel;
 		else
-			H.pPrior = P + (P - P_not_E) * (-normLevel);
+			H.pPrior = P + (P_not_E - P) * (-normLevel);
 	}
 
 	calculateValues();
@@ -132,7 +132,7 @@ void LittleExpertSystem::answer(double level)
 	if (!m_running)
 		return;
 
-	double normLevel = (level - m_dunnoLevel) / (m_yesLevel - m_noLevel) + 0.5;
+	double normLevel = ((level - m_dunnoLevel) / (m_yesLevel - m_noLevel)) * 2.0;
 	recalculate(normLevel);
 }
 
