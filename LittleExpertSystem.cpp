@@ -117,8 +117,6 @@ bool LittleExpertSystem::nextQuestion()
 
 void LittleExpertSystem::run()
 {
-	if (!m_kb)
-		throw std::runtime_error("Knowledge base has not been loaded");
 	m_running = nextQuestion();
 }
 
@@ -145,7 +143,7 @@ void LittleExpertSystem::reset()
 {
 	m_currentQuestion = 0;
 	m_running = false;
-	m_kb->reset();
+	m_kb.reset();
 }
 
 int LittleExpertSystem::getHypothesesCount() const
