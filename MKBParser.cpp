@@ -222,5 +222,5 @@ KnowledgeBase MKBParser::parse()
 	parseQuestions();
 	parseHypotheses();
 
-	return m_result;
+	return std::move(m_result);
 }
