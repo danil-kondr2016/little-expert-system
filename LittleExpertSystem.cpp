@@ -50,6 +50,9 @@ void LittleExpertSystem::calculateValues()
 	for (size_t i = 0; i < m_kb.hypotheses.size(); i++) {
 		for (auto const& j : m_kb.hypotheses[i].evidences) {
 			int questionId = j.first;
+			if (m_kb.questions[questionId].used)
+				continue;
+
 			double Py = j.second.pYes;
 			double Pn = j.second.pNo;
 			double P = m_kb.hypotheses[i].pPrior;
@@ -111,10 +114,10 @@ int LittleExpertSystem::selectQuestion()
 
 bool LittleExpertSystem::nextQuestion()
 {
-	m_kb.questions[m_currentQuestion].used = true;
 	m_currentQuestion = selectQuestion();
 	if (m_currentQuestion == -1)
 		return false;
+	m_kb.questions[m_currentQuestion].used = true;
 
 	return true;
 }
@@ -136,6 +139,7 @@ void LittleExpertSystem::answer(double level)
 
 	double normLevel = ((level - m_dunnoLevel) / (m_yesLevel - m_noLevel)) * 2.0;
 	recalculate(normLevel);
+	m_running = nextQuestion();
 }
 
 void LittleExpertSystem::stop()
