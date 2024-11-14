@@ -7,6 +7,7 @@
 #include <unicode/ustream.h>
 #include <fstream>
 #include <windows.h>
+#include <iomanip>
 
 void KnowledgeBase::reset()
 {
@@ -216,6 +217,25 @@ int main(int argc, char **argv)
 		for (std::pair<int, Evidence> &&evidence_pair: hypothesis.evidences) {
 			cout << "  q=" << evidence_pair.first << ", pY=" << evidence_pair.second.pYes << ", pN=" << evidence_pair.second.pNo << endl;
 		}
+	}
+
+	LittleExpertSystem les;
+	les.loadKnowledgeBase(kb);
+
+	cout << "This knowledge base will be executed." << endl;
+	les.run();
+	while (les.isRunning()) {
+		for (int i = 0; i < les.getHypothesesCount(); i++) {
+			cout << les.getHypothesis(i) << ": " << setprecision(6) << les.getHypothesisValue(i) << endl;
+		}
+		cout << les.getQuestion(les.getCurrentQuestionIndex()) << endl;
+		cout << "Value [" << les.getNoLevel() << "; " << les.getYesLevel() << "]: ";
+		double value;
+		cin >> value;
+		les.answer(value);
+	}
+	for (int i = 0; i < les.getHypothesesCount(); i++) {
+		cout << les.getHypothesis(i) << ": " << les.getHypothesisValue(i) << endl;
 	}
 
 	return 0;
