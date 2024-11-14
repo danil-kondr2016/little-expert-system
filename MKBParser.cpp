@@ -42,6 +42,11 @@ bool MKBParser::nextLine(icu::UnicodeString &output)
 {
 	string currentLine;
 	getline(m_input, currentLine);
+	
+	if (currentLine.length() == 0)
+		return false;
+	if (currentLine[currentLine.length() - 1] == '\r')
+		currentLine.resize(currentLine.length() - 1);
 	if (currentLine.length() == 0)
 		return false;
 
