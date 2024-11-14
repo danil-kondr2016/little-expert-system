@@ -153,14 +153,15 @@ void MKBParser::parseSingleHypothesis(UnicodeString &line)
 	Hypothesis &H = m_result.hypotheses.emplace_back();
 	int QuestionIndex;
 	Evidence E;
-	while (pos > 0 && pos < length) {
+	while (pos >= 0 && pos < length) {
 		next_pos = line.indexOf(',', pos);
 
 		int32_t tokenSize;
 		if (next_pos == -1)
 			next_pos = length + 1;
-		tokenSize = next_pos - pos - 1;
+		tokenSize = next_pos - pos;
 		UnicodeString token(line, pos, tokenSize);
+		token = token.trim();
 
 		switch (tokenIndex) {
 		case 0:
