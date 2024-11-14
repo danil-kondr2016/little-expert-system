@@ -2,6 +2,10 @@
 //
 
 #include "LittleExpertSystem.h"
+#include "Parser.h"
+
+#include <unicode/ustream.h>
+#include <fstream>
 
 void KnowledgeBase::reset()
 {
@@ -178,8 +182,29 @@ double LittleExpertSystem::getHypothesisValue(int index) const
 
 using namespace std;
 
-int main()
+int main(int argc, char **argv)
 {
-	cout << "Hello CMake." << endl;
+	setlocale(LC_ALL, "ru_RU");
+
+	const char* input_name = "test.mkb";
+	ifstream input(input_name);
+	MKBParser parser(input);
+
+	KnowledgeBase kb = parser.parse();
+	cout << "Comment: " << kb.comment << endl;
+	cout << "Questions:" << endl;
+
+	for (Question question: kb.questions)
+		cout << question.description << endl;
+
+	cout << endl << "Hypotheses: " << endl;
+	for (Hypothesis hypothesis: kb.hypotheses) {
+		cout << "H: " << hypothesis.name << ", P=" << hypothesis.pPriorOriginal << endl;
+		cout << "Evidences:" << endl;
+		for (std::pair<int, Evidence> &&evidence_pair: hypothesis.evidences) {
+			cout << "  q=" << evidence_pair.first << ", pY=" << evidence_pair.second.pYes << ", pN=" << evidence_pair.second.pNo << endl;
+		}
+	}
+
 	return 0;
 }
