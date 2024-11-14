@@ -13,14 +13,15 @@ endif()
 project ("LittleExpertSystem")
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (LittleExpertSystem "LittleExpertSystem.cpp" "LittleExpertSystem.h" "Parser.h")
+add_executable (LittleExpertSystem "LittleExpertSystem.cpp" "LittleExpertSystem.h" "Parser.h" "MKBParser.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET LittleExpertSystem PROPERTY CXX_STANDARD 20)
 endif()
 
-find_package(ICU REQUIRED COMPONENTS uc)
-target_link_libraries(LittleExpertSystem ICU::uc)
+find_package(ICU REQUIRED COMPONENTS uc io)
+find_package(fmt CONFIG REQUIRED)
+target_link_libraries(LittleExpertSystem ICU::uc ICU::io fmt::fmt)
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)

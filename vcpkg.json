@@ -1,5 +1,5 @@
 {
   "dependencies": [
-    "icu"
+    "icu", "fmt"
   ]
 }
