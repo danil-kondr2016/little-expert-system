@@ -75,6 +75,7 @@ public:
 	void stop();
 	void reset();
 
+	int getCurrentQuestionIndex() const;
 	int getHypothesesCount() const;
 	int getQuestionsCount() const;
 	icu::UnicodeString getComment() const;

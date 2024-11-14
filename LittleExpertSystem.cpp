@@ -180,6 +180,13 @@ double LittleExpertSystem::getHypothesisValue(int index) const
 	return m_kb.hypotheses[index].pPrior;
 }
 
+int LittleExpertSystem::getCurrentQuestionIndex() const
+{
+	if (m_currentQuestion < 0)
+		return 0;
+	return m_currentQuestion;
+}
+
 using namespace std;
 
 int main(int argc, char **argv)
