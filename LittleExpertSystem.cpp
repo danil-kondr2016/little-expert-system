@@ -6,6 +6,7 @@
 
 #include <unicode/ustream.h>
 #include <fstream>
+#include <windows.h>
 
 void KnowledgeBase::reset()
 {
@@ -195,7 +196,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-	setlocale(LC_ALL, "ru_RU");
+	SetConsoleOutputCP(65001);
 
 	const char* input_name = "test.mkb";
 	ifstream input(input_name);
