@@ -13,16 +13,16 @@ endif()
 project ("LittleExpertSystem")
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (LittleExpertSystem "LittleExpertSystem.cpp" "LittleExpertSystem.h" "Parser.h" "MKBParser.cpp")
+add_executable (LESRun "LittleExpertSystem.cpp" "LittleExpertSystem.h" "Parser.h" "MKBParser.cpp" "LESRun.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET LittleExpertSystem PROPERTY CXX_STANDARD 20)
+  set_property(TARGET LESRun PROPERTY CXX_STANDARD 20)
 endif()
 
 find_package(ICU REQUIRED COMPONENTS uc io)
 find_package(fmt CONFIG REQUIRED)
 find_package(nowide REQUIRED)
-target_link_libraries(LittleExpertSystem ICU::uc ICU::io fmt::fmt nowide::nowide)
+target_link_libraries(LESRun ICU::uc ICU::io fmt::fmt nowide::nowide)
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)
@@ -30,9 +30,9 @@ IF (MSVC)
 		MESSAGE(WARNING "CMake version 3.0 or newer is required use build variable TARGET_FILE")
 	ELSE()
 		ADD_CUSTOM_COMMAND(
-			TARGET LittleExpertSystem
+			TARGET LESRun
 			POST_BUILD
-			COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\utf8.manifest\" -inputresource:\"$<TARGET_FILE:LittleExpertSystem>\"\;\#1 -outputresource:\"$<TARGET_FILE:LittleExpertSystem>\"\;\#1
+			COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\utf8.manifest\" -inputresource:\"$<TARGET_FILE:LESRun>\"\;\#1 -outputresource:\"$<TARGET_FILE:LESRun>\"\;\#1
 			COMMENT "Adding display aware manifest..." 
 		)
 	ENDIF()
