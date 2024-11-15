@@ -1,4 +1,4 @@
-#include "LittleExpertSystem.h"
+﻿#include "LittleExpertSystem.h"
 
 void KnowledgeBase::reset()
 {
@@ -164,22 +164,28 @@ icu::UnicodeString LittleExpertSystem::getComment() const
 
 icu::UnicodeString LittleExpertSystem::getQuestion(int index) const
 {
+	if (index < 0 || index >= m_kb.questions.size())
+		return "";
 	return m_kb.questions[index].description;
 }
 
 icu::UnicodeString LittleExpertSystem::getHypothesis(int index) const
 {
+	if (index < 0 || index >= m_kb.questions.size())
+		return "";
 	return m_kb.hypotheses[index].name;
 }
 
 double LittleExpertSystem::getHypothesisValue(int index) const
 {
+	if (index < 0 || index >= m_kb.questions.size())
+		return nan("IVAL");
 	return m_kb.hypotheses[index].pPrior;
 }
 
 int LittleExpertSystem::getCurrentQuestionIndex() const
 {
-	if (m_currentQuestion < 0)
-		return 0;
+	if (!m_running || m_currentQuestion < 0)
+		return -1;
 	return m_currentQuestion;
 }
