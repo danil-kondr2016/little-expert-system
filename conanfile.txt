@@ -1,7 +1,0 @@
-[requires]
-icu/76.1
-[generators]
-CMakeDeps
-CMakeToolchain
-[layout]
-cmake_layout
