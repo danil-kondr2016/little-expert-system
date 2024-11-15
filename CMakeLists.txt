@@ -21,7 +21,8 @@ endif()
 
 find_package(ICU REQUIRED COMPONENTS uc io)
 find_package(fmt CONFIG REQUIRED)
-target_link_libraries(LittleExpertSystem ICU::uc ICU::io fmt::fmt)
+find_package(nowide REQUIRED)
+target_link_libraries(LittleExpertSystem ICU::uc ICU::io fmt::fmt nowide::nowide)
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)

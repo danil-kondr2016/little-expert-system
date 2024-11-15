@@ -1,13 +1,23 @@
 ﻿// LittleExpertSystem.cpp: определяет точку входа для приложения.
 //
 
+#include <nowide/args.hpp>
+#include <nowide/fstream.hpp>
+#include <nowide/iostream.hpp>
+
 #include "LittleExpertSystem.h"
 #include "Parser.h"
-
 #include <unicode/ustream.h>
-#include <fstream>
-#include <windows.h>
 #include <iomanip>
+
+using std::endl;
+using std::setprecision;
+using std::setw;
+using nowide::cout;
+using nowide::cerr;
+using nowide::cin;
+using std::fixed;
+using std::defaultfloat;
 
 void KnowledgeBase::reset()
 {
@@ -193,14 +203,12 @@ int LittleExpertSystem::getCurrentQuestionIndex() const
 	return m_currentQuestion;
 }
 
-using namespace std;
-
 int main(int argc, char **argv)
 {
-	SetConsoleOutputCP(65001);
+	nowide::args a(argc, argv);
 
 	const char* input_name = "test.mkb";
-	ifstream input(input_name);
+	nowide::ifstream input(input_name);
 	MKBParser parser(input);
 
 	KnowledgeBase kb = parser.parse();
@@ -226,7 +234,7 @@ int main(int argc, char **argv)
 	les.run();
 	while (les.isRunning()) {
 		for (int i = 0; i < les.getHypothesesCount(); i++) {
-			cout << les.getHypothesis(i) << ": " << setprecision(6) << les.getHypothesisValue(i) << endl;
+			cout << les.getHypothesis(i) << ": " << fixed << les.getHypothesisValue(i) << std::defaultfloat << endl;
 		}
 		cout << les.getQuestion(les.getCurrentQuestionIndex()) << endl;
 		cout << "Value [" << les.getNoLevel() << "; " << les.getYesLevel() << "]: ";
@@ -235,7 +243,7 @@ int main(int argc, char **argv)
 		les.answer(value);
 	}
 	for (int i = 0; i < les.getHypothesesCount(); i++) {
-		cout << les.getHypothesis(i) << ": " << les.getHypothesisValue(i) << endl;
+		cout << les.getHypothesis(i) << ": " << fixed << les.getHypothesisValue(i) << defaultfloat << endl;
 	}
 
 	return 0;
