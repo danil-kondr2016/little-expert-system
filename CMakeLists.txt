@@ -19,11 +19,10 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET LESRun PROPERTY CXX_STANDARD 20)
 endif()
 
-find_package(ICU REQUIRED COMPONENTS uc io)
 find_package(fmt CONFIG REQUIRED)
 find_package(nowide REQUIRED)
 find_package(argparse REQUIRED)
-target_link_libraries(LESRun ICU::uc ICU::io fmt::fmt nowide::nowide argparse::argparse)
+target_link_libraries(LESRun fmt::fmt nowide::nowide argparse::argparse)
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)

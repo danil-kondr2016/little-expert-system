@@ -157,19 +157,19 @@ int LittleExpertSystem::getQuestionsCount() const
 	return (int)m_kb.questions.size();
 }
 
-icu::UnicodeString LittleExpertSystem::getComment() const
+std::string LittleExpertSystem::getComment() const
 {
 	return m_kb.comment;
 }
 
-icu::UnicodeString LittleExpertSystem::getQuestion(int index) const
+std::string LittleExpertSystem::getQuestion(int index) const
 {
 	if (index < 0 || index >= m_kb.questions.size())
 		return "";
 	return m_kb.questions[index].description;
 }
 
-icu::UnicodeString LittleExpertSystem::getHypothesis(int index) const
+std::string LittleExpertSystem::getHypothesis(int index) const
 {
 	if (index < 0 || index >= m_kb.hypotheses.size())
 		return "";

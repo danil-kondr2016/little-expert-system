@@ -5,7 +5,6 @@
 #include <nowide/fstream.hpp>
 #include <nowide/iostream.hpp>
 #include <iomanip>
-#include <unicode/ustream.h>
 
 #include <argparse/argparse.hpp>
 

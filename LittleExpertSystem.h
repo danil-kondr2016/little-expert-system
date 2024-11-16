@@ -8,11 +8,9 @@
 #include <string>
 #include <map>
 
-#include <unicode/unistr.h>
-
 struct Question
 {
-	icu::UnicodeString description;
+	std::string description;
 	double value;
 	bool used : 1;
 };
@@ -27,7 +25,7 @@ const Evidence DEFAULT_EVIDENCE = { 0.5, 0.5 };
 
 struct Hypothesis
 {
-	icu::UnicodeString name;
+	std::string name;
 	double pPrior;
 	double pPriorOriginal;
 	std::map<int, Evidence> evidences;
@@ -35,7 +33,7 @@ struct Hypothesis
 
 struct KnowledgeBase
 {
-	icu::UnicodeString comment;
+	std::string comment;
 	std::vector<Question> questions;
 	std::vector<Hypothesis> hypotheses;
 
@@ -78,8 +76,8 @@ public:
 	int getCurrentQuestionIndex() const;
 	int getHypothesesCount() const;
 	int getQuestionsCount() const;
-	icu::UnicodeString getComment() const;
-	icu::UnicodeString getQuestion(int index) const;
-	icu::UnicodeString getHypothesis(int index) const;
+	std::string getComment() const;
+	std::string getQuestion(int index) const;
+	std::string getHypothesis(int index) const;
 	double getHypothesisValue(int index) const;
 };

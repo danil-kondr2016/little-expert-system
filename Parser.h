@@ -2,7 +2,6 @@
 
 #include "LittleExpertSystem.h"
 
-#include <unicode/unistr.h>
 #include <iostream>
 #include <stdexcept>
 
@@ -36,11 +35,11 @@ private:
 	KnowledgeBase m_result;
 	int m_lineIndex;
 
-	bool nextLine(icu::UnicodeString &line);
+	bool nextLine(std::string &line);
 
 	void parseComment();
 	void parseQuestions();
-	void parseSingleHypothesis(icu::UnicodeString &line);
+	void parseSingleHypothesis(std::string &line);
 	void parseHypotheses();
 public:
 	MKBParser(std::istream &input) : KnowledgeBaseParser(input), m_lineIndex(0) {}
