@@ -186,7 +186,7 @@ double LittleExpertSystem::getQuestionValue(int index) const
 {
 	if (index < 0 || index >= m_kb.questions.size())
 		return nan("IVAL");
-	return m_kb.quesitons[index].value;
+	return m_kb.questions[index].value;
 }
 
 std::string LittleExpertSystem::getHypothesis(int index) const
