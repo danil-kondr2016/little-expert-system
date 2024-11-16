@@ -7,6 +7,8 @@
 #include <iomanip>
 #include <unicode/ustream.h>
 
+#include <argparse/argparse.hpp>
+
 using std::endl;
 using std::setprecision;
 using std::setw;
@@ -15,12 +17,26 @@ using nowide::cerr;
 using nowide::cin;
 using std::fixed;
 using std::defaultfloat;
+using argparse::ArgumentParser;
 
 int main(int argc, char** argv)
 {
 	nowide::args a(argc, argv);
+	ArgumentParser program("LESRun");
 
-	const char* input_name = "test.mkb";
+	program.add_argument("input_file")
+		.help("Knowledge base");
+
+	try {
+		program.parse_args(argc, argv);
+	}
+	catch (const std::exception &e) {
+		cerr << e.what() << endl;
+		cerr << program;
+		std::exit(1);
+	}
+
+	std::string input_name = program.get("input_file");
 	nowide::ifstream input(input_name);
 	MKBParser parser(input);
 
