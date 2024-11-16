@@ -143,8 +143,13 @@ void LittleExpertSystem::answer(double level)
 	if (level < m_noLevel || level > m_yesLevel)
 		throw std::invalid_argument("Level is out of range");
 
+	ConsultationStep &step = m_steps.emplace_back();
+	step.currentQuestion = m_currentQuestion;
+	step.value = level;
+
 	double normLevel = ((level - m_dunnoLevel) / (m_yesLevel - m_noLevel)) * 2.0;
 	recalculate(normLevel);
+
 	m_running = nextQuestion();
 }
 
@@ -158,6 +163,7 @@ void LittleExpertSystem::reset()
 	m_currentQuestion = 0;
 	m_running = false;
 
+	m_steps.clear();
 	m_kb.reset();
 	calculateValues();
 }
@@ -218,4 +224,44 @@ void LittleExpertSystem::setQuestionTurnedOff(int index, bool turnedOff)
 		return;
 
 	m_kb.questions[index].turnedOff = turnedOff;
+}
+
+int LittleExpertSystem::getConsultationStepCount() const
+{
+	return (int)m_steps.size();
+}
+
+int LittleExpertSystem::getConsultationStepQuestion(int index) const
+{
+	if (index < 0 || index >= m_steps.size())
+		return -1;
+	return m_steps[index].currentQuestion;
+}
+
+double LittleExpertSystem::getConsultationStepValue(int index) const
+{
+	if (index < 0 || index >= m_steps.size())
+		return nan("IVAL");
+	return m_steps[index].value;
+}
+
+void LittleExpertSystem::undoConsultationStep(int index) const
+{
+	if (index < 0 || index >= m_steps.size())
+		return;
+
+	// Remove consultation step from list
+	m_steps.erase(m_steps.begin()+index);
+
+	// Replay consultation steps
+	m_kb.reset();
+	calculateValues();
+	m_running = true;
+	for (ConsultationStep step: m_steps) {
+		m_currentQuestion = step.currentQuestion;
+
+		double normLevel = ((level - m_dunnoLevel) / (m_yesLevel - m_noLevel)) * 2.0;
+		recalculate(normLevel);
+	}
+	m_running = nextQuestion();
 }

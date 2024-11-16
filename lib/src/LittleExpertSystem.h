@@ -1,12 +1,11 @@
-﻿// LittleExpertSystem.h : включаемый файл для стандартных системных включаемых файлов
-// или включаемые файлы для конкретного проекта.
-
-#pragma once
+﻿#pragma once
 
 #include <iostream>
 #include <vector>
 #include <string>
 #include <map>
+
+#include "ConsultationSteps.h"
 
 namespace les {
 
@@ -47,6 +46,7 @@ class LittleExpertSystem
 {
 private:
 	KnowledgeBase m_kb;
+	ConsultationSteps m_steps;
 	bool m_running = false;
 	int m_currentQuestion = 0;
 
@@ -89,6 +89,11 @@ public:
 	double getHypothesisValue(int index) const;
 
 	void setQuestionTurnedOff(int index, bool turnedOff);
+
+	int getConsultationStepCount(int index) const;
+	int getConsultationStepQuestion(int index) const;
+	double getConsultationStepValue(int index) const;
+	void undoConsultationStep(int index);
 };
 
 };

@@ -175,3 +175,27 @@ void les_SetQuestionTurnedOff(LittleExpertSystem *expert, int index, int turnedO
 	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	self->setQuestionTurnedOff(index, turnedOff != 0);
 }
+
+int les_GetConsultationStepCount(LittleExpertSystem *expert)
+{
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
+	return self->getConsultationStepCount();
+}
+
+int les_GetConsultationStepQuestion(LittleExpertSystem *expert, int index)
+{
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
+	return self->getConsultationStepQuestion(index);
+}
+
+double les_GetConsultationStepValue(LittleExpertSystem *expert, int index)
+{
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
+	return self->getConsultationStepValue(index);
+}
+
+void les_UndoConsultationStep(LittleExpertSystem *expert, int index)
+{
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
+	self->undoConsultationStep(index);
+}

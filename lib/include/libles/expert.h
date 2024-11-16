@@ -39,6 +39,11 @@ double les_GetHypothesisValue(LittleExpertSystem *expert, int index);
 
 void les_SetQuestionTurnedOff(LittleExpertSystem *expert, int index, int turnedOff);
 
+int les_GetConsultationStepCount(LittleExpertSystem *expert);
+int les_GetConsultationStepQuestion(LittleExpertSystem *expert, int index);
+double les_GetConsultationStepValue(LittleExpertSystem *expert, int index);
+void les_UndoConsultationStep(LittleExpertSystem *expert, int index);
+
 #ifdef __cplusplus
 }
 #endif
