@@ -171,14 +171,14 @@ icu::UnicodeString LittleExpertSystem::getQuestion(int index) const
 
 icu::UnicodeString LittleExpertSystem::getHypothesis(int index) const
 {
-	if (index < 0 || index >= m_kb.questions.size())
+	if (index < 0 || index >= m_kb.hypotheses.size())
 		return "";
 	return m_kb.hypotheses[index].name;
 }
 
 double LittleExpertSystem::getHypothesisValue(int index) const
 {
-	if (index < 0 || index >= m_kb.questions.size())
+	if (index < 0 || index >= m_kb.hypotheses.size())
 		return nan("IVAL");
 	return m_kb.hypotheses[index].pPrior;
 }
