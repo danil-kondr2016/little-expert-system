@@ -17,7 +17,7 @@ int les_LoadKnowledgeBaseW(les_expert_t *expert, const wchar_t *path, char** err
 
 double les_GetYesLevel(les_expert_t *expert);
 double les_GetNoLevel(les_expert_t *expert);
-void les_SetLevels(les_expert_t *expert, double noLevel, double yesLevel);
+int les_SetLevels(les_expert_t *expert, double noLevel, double yesLevel);
 
 void les_Run(les_expert_t *expert);
 int les_IsRunning(les_expert_t *expert);

@@ -69,10 +69,16 @@ double les_GetNoLevel(les_expert_t *expert)
 	return self->getNoLevel();
 }
 
-void les_SetLevels(les_expert_t *expert, double noLevel, double yesLevel)
+int les_SetLevels(les_expert_t *expert, double noLevel, double yesLevel)
 {
 	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
-	self->setLevels(noLevel, yesLevel);
+	try {
+		self->setLevels(noLevel, yesLevel);
+		return 1;
+	}
+	catch (std::invalid_argument &e) {
+		return 0;
+	}
 }
 
 void les_Run(les_expert_t *expert)

@@ -34,6 +34,8 @@ double LittleExpertSystem::getNoLevel() const
 
 void LittleExpertSystem::setLevels(double noLevel, double yesLevel)
 {
+	if (noLevel >= yesLevel)
+		throw std::invalid_argument("\"No\" level should be less than \"yes\" level");
 	this->m_yesLevel = yesLevel;
 	this->m_noLevel = noLevel;
 	this->m_dunnoLevel = (yesLevel + noLevel) / 2.0;
