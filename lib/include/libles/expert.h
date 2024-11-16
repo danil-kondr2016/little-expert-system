@@ -21,7 +21,7 @@ void les_SetLevels(les_expert_t *expert, double noLevel, double yesLevel);
 
 void les_Run(les_expert_t *expert);
 int les_IsRunning(les_expert_t *expert);
-void les_Answer(les_expert_t *expert, double level);
+int les_Answer(les_expert_t *expert, double level);
 void les_Stop(les_expert_t *expert);
 void les_Reset(les_expert_t *expert);
 

@@ -84,10 +84,17 @@ int les_IsRunning(les_expert_t *expert)
 	return self->isRunning() ? 1 : 0;
 }
 
-void les_Answer(les_expert_t *expert, double level)
+int les_Answer(les_expert_t *expert, double level)
 {
 	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
-	self->answer(level);
+
+	try {
+		self->answer(level);
+		return 1;
+	}
+	catch (std::invalid_argument &e) {
+		return 0;
+	}
 }
 
 void les_Stop(les_expert_t *expert)

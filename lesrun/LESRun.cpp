@@ -56,7 +56,9 @@ int main(int argc, char** argv)
 		cout << "Value [" << les_GetNoLevel(les.get()) << "; " << les_GetYesLevel(les.get()) << "]: ";
 		double value;
 		cin >> value;
-		les_Answer(les.get(), value);
+		if (!les_Answer(les.get(), value))
+			cout << "Level is out of range" << ": " << value << endl;
+		
 	}
 	for (int i = 0; i < les_GetHypothesesCount(les.get()); i++) {
 		std::unique_ptr<const char> hypothesis(les_GetHypothesis(les.get(), i));

@@ -130,6 +130,9 @@ void LittleExpertSystem::answer(double level)
 	if (!m_running)
 		return;
 
+	if (level < m_noLevel || level > m_yesLevel)
+		throw std::invalid_argument("Level is out of range");
+
 	double normLevel = ((level - m_dunnoLevel) / (m_yesLevel - m_noLevel)) * 2.0;
 	recalculate(normLevel);
 	m_running = nextQuestion();
