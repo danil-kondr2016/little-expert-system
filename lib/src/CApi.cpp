@@ -9,26 +9,30 @@
 
 #include <string.h>
 
-les_expert_t *les_expert_create(void)
-{
-	LittleExpertSystem *Expert;
-	Expert = new LittleExpertSystem;
+using CPP_Les = les::LittleExpertSystem;
+using les::KnowledgeBase;
+using les::MKBParser;
 
-	return reinterpret_cast<les_expert_t *>(Expert);
+LittleExpertSystem *les_expert_create(void)
+{
+	CPP_Les *Expert;
+	Expert = new CPP_Les;
+
+	return reinterpret_cast<LittleExpertSystem *>(Expert);
 }
 
-void les_expert_destroy(les_expert_t *expert)
+void les_expert_destroy(LittleExpertSystem *expert)
 {
 	if (!expert)
 		return;
 
-	LittleExpertSystem *E = reinterpret_cast<LittleExpertSystem *>(expert);
+	CPP_Les *E = reinterpret_cast<CPP_Les *>(expert);
 	delete E;
 }
 
-int les_LoadKnowledgeBase(les_expert_t *expert, const char* path, char** errorString)
+int les_LoadKnowledgeBase(LittleExpertSystem *expert, const char* path, char** errorString)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 
 	try {
 		nowide::ifstream input;
@@ -52,26 +56,26 @@ int les_LoadKnowledgeBase(les_expert_t *expert, const char* path, char** errorSt
 	}
 }
 
-int les_LoadKnowledgeBaseW(les_expert_t *expert, const wchar_t* path, char** errorString)
+int les_LoadKnowledgeBaseW(LittleExpertSystem *expert, const wchar_t* path, char** errorString)
 {
 	return les_LoadKnowledgeBase(expert, nowide::narrow(path).c_str(), errorString);
 }
 
-double les_GetYesLevel(les_expert_t *expert)
+double les_GetYesLevel(LittleExpertSystem *expert)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return self->getYesLevel();
 }
 
-double les_GetNoLevel(les_expert_t *expert)
+double les_GetNoLevel(LittleExpertSystem *expert)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return self->getNoLevel();
 }
 
-int les_SetLevels(les_expert_t *expert, double noLevel, double yesLevel)
+int les_SetLevels(LittleExpertSystem *expert, double noLevel, double yesLevel)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	try {
 		self->setLevels(noLevel, yesLevel);
 		return 1;
@@ -81,21 +85,21 @@ int les_SetLevels(les_expert_t *expert, double noLevel, double yesLevel)
 	}
 }
 
-void les_Run(les_expert_t *expert)
+void les_Run(LittleExpertSystem *expert)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	self->run();
 }
 
-int les_IsRunning(les_expert_t *expert)
+int les_IsRunning(LittleExpertSystem *expert)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return self->isRunning() ? 1 : 0;
 }
 
-int les_Answer(les_expert_t *expert, double level)
+int les_Answer(LittleExpertSystem *expert, double level)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 
 	try {
 		self->answer(level);
@@ -106,68 +110,68 @@ int les_Answer(les_expert_t *expert, double level)
 	}
 }
 
-void les_Stop(les_expert_t *expert)
+void les_Stop(LittleExpertSystem *expert)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	self->stop();
 }
 
-void les_Reset(les_expert_t *expert)
+void les_Reset(LittleExpertSystem *expert)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	self->reset();
 }
 
-int les_GetCurrentQuestionIndex(les_expert_t *expert)
+int les_GetCurrentQuestionIndex(LittleExpertSystem *expert)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return self->getCurrentQuestionIndex();
 }
 
-int les_GetHypothesesCount(les_expert_t *expert)
+int les_GetHypothesesCount(LittleExpertSystem *expert)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return self->getHypothesesCount();
 }
 
-int les_GetQuestionsCount(les_expert_t *expert)
+int les_GetQuestionsCount(LittleExpertSystem *expert)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return self->getQuestionsCount();
 }
 
-const char* les_GetComment(les_expert_t *expert)
+const char* les_GetComment(LittleExpertSystem *expert)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return strdup(self->getComment().c_str());
 }
 
-const char* les_GetQuestion(les_expert_t *expert, int index)
+const char* les_GetQuestion(LittleExpertSystem *expert, int index)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return strdup(self->getQuestion(index).c_str());
 }
 
-double les_GetQuestionValue(les_expert_t *expert, int index)
+double les_GetQuestionValue(LittleExpertSystem *expert, int index)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return self->getQuestionValue(index);
 }
 
-const char* les_GetHypothesis(les_expert_t *expert, int index)
+const char* les_GetHypothesis(LittleExpertSystem *expert, int index)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return strdup(self->getHypothesis(index).c_str());
 }
 
-double les_GetHypothesisValue(les_expert_t *expert, int index)
+double les_GetHypothesisValue(LittleExpertSystem *expert, int index)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	return self->getHypothesisValue(index);
 }
 
-void les_SetQuestionTurnedOff(les_expert_t *expert, int index, int turnedOff)
+void les_SetQuestionTurnedOff(LittleExpertSystem *expert, int index, int turnedOff)
 {
-	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	CPP_Les* self = reinterpret_cast<CPP_Les*>(expert);
 	self->setQuestionTurnedOff(index, turnedOff != 0);
 }

@@ -12,6 +12,8 @@ using std::snprintf;
 
 using std::unique_ptr;
 
+using namespace les;
+
 static string CP1251ToUTF8(string input)
 {
 	static const char *unicode[] = {

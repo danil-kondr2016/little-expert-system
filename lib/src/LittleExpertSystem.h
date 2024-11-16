@@ -8,6 +8,8 @@
 #include <string>
 #include <map>
 
+namespace les {
+
 struct Question
 {
 	std::string description;
@@ -87,4 +89,6 @@ public:
 	double getHypothesisValue(int index) const;
 
 	void setQuestionTurnedOff(int index, bool turnedOff);
+};
+
 };

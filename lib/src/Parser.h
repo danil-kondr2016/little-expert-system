@@ -5,6 +5,8 @@
 #include <iostream>
 #include <stdexcept>
 
+namespace les {
+
 class KnowledgeBaseParser
 {
 protected:
@@ -44,4 +46,6 @@ private:
 public:
 	MKBParser(std::istream &input) : KnowledgeBaseParser(input), m_lineIndex(0) {}
 	KnowledgeBase parse() override;
+};
+
 };

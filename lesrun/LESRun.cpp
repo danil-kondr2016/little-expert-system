@@ -37,10 +37,11 @@ int main(int argc, char** argv)
 	}
 
 	std::string input_name = program.get("input_file");
-	std::unique_ptr<les_expert_t, decltype(&les_expert_destroy)> les(les_expert_create(), les_expert_destroy);
+	std::unique_ptr<LittleExpertSystem, decltype(&les_expert_destroy)> les(les_expert_create(), les_expert_destroy);
+	LittleExpertSystem *Les = les.get();
 
 	char *errorString;
-	if (!les_LoadKnowledgeBase(les.get(), input_name.c_str(), &errorString)) {
+	if (!les_LoadKnowledgeBase(Les, input_name.c_str(), &errorString)) {
 		cerr << "Failed to open file " << input_name << ": " << errorString << endl;
 		delete errorString;
 		std::exit(1);
@@ -48,24 +49,24 @@ int main(int argc, char** argv)
 	delete errorString;
 
 	cout << "This knowledge base will be executed." << endl;
-	les_Run(les.get());
-	while (les_IsRunning(les.get())) {
+	les_Run(Les);
+	while (les_IsRunning(Les)) {
 		for (int i = 0; i < les_GetHypothesesCount(les.get()); i++) {
-			std::unique_ptr<const char> hypothesis(les_GetHypothesis(les.get(), i));
-			cout << hypothesis.get() << ": " << fixed << les_GetHypothesisValue(les.get(), i) << std::defaultfloat << endl;
+			std::unique_ptr<const char> hypothesis(les_GetHypothesis(Les, i));
+			cout << hypothesis.get() << ": " << fixed << les_GetHypothesisValue(Les, i) << std::defaultfloat << endl;
 		}
-		std::unique_ptr<const char> question(les_GetQuestion(les.get(), les_GetCurrentQuestionIndex(les.get())));
+		std::unique_ptr<const char> question(les_GetQuestion(Les, les_GetCurrentQuestionIndex(Les)));
 		cout << question.get() << endl;
-		cout << "Value [" << les_GetNoLevel(les.get()) << "; " << les_GetYesLevel(les.get()) << "]: ";
+		cout << "Value [" << les_GetNoLevel(Les) << "; " << les_GetYesLevel(Les) << "]: ";
 		double value;
 		cin >> value;
-		if (!les_Answer(les.get(), value))
+		if (!les_Answer(Les, value))
 			cout << "Level is out of range" << ": " << value << endl;
 		
 	}
 	for (int i = 0; i < les_GetHypothesesCount(les.get()); i++) {
-		std::unique_ptr<const char> hypothesis(les_GetHypothesis(les.get(), i));
-		cout << hypothesis.get() << ": " << fixed << les_GetHypothesisValue(les.get(), i) << std::defaultfloat << endl;
+		std::unique_ptr<const char> hypothesis(les_GetHypothesis(Les, i));
+		cout << hypothesis.get() << ": " << fixed << les_GetHypothesisValue(Les, i) << std::defaultfloat << endl;
 	}
 
 	return 0;

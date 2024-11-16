@@ -4,6 +4,8 @@
 using std::fabs;
 using std::nan;
 
+using namespace les;
+
 void KnowledgeBase::reset()
 {
 	for (size_t i = 0; i < this->questions.size(); i++) {
