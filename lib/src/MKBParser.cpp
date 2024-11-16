@@ -168,6 +168,10 @@ void MKBParser::parseQuestions()
 {
 	string line;
 
+	// Skip the first line
+	if (!nextLine(line))
+		return;
+
 	while (nextLine(line)) {
 		Question &Q = m_result.questions.emplace_back();
 		Q.description = line;
@@ -204,7 +208,7 @@ void MKBParser::parseSingleHypothesis(string &line)
 	length = line.length();
 
 	Hypothesis &H = m_result.hypotheses.emplace_back();
-	int QuestionIndex;
+	int QuestionIndex = -1;
 	Evidence E;
 	while (pos >= 0 && pos < length) {
 		next_pos = line.find(',', pos);
@@ -231,8 +235,9 @@ void MKBParser::parseSingleHypothesis(string &line)
 			case 0:
 				if (!TryStringToInt(token, QuestionIndex))
 					throw MKBSyntaxErrorAt(m_lineIndex, pos, string("Invalid value of question index field: ") + token);
-				if (QuestionIndex <= 0 || QuestionIndex >= m_result.questions.size())
+				if (QuestionIndex <= 0 || QuestionIndex > m_result.questions.size())
 					throw MKBInvalidReferenceToQuestionAt(m_lineIndex, pos, QuestionIndex);
+				QuestionIndex--;
 				break;
 			case 1:
 				if (!TryStringToDouble(token, E.pYes))
@@ -242,7 +247,7 @@ void MKBParser::parseSingleHypothesis(string &line)
 				if (!TryStringToDouble(token, E.pNo))
 					throw MKBSyntaxErrorAt(m_lineIndex, pos, string("Invalid value of \"no\" answer field: ") + token);
 				H.evidences[QuestionIndex] = E;
-				QuestionIndex = 0;
+				QuestionIndex = -1;
 				E.pYes = 0;
 				E.pNo = 0;
 				break;
