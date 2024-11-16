@@ -37,6 +37,8 @@ double les_GetQuestionValue(les_expert_t *expert, int index);
 const char *les_GetHypothesis(les_expert_t *expert, int index);
 double les_GetHypothesisValue(les_expert_t *expert, int index);
 
+void les_SetQuestionTurnedOff(les_expert_t *expert, int index, int turnedOff);
+
 #ifdef __cplusplus
 }
 #endif

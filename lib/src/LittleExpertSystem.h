@@ -13,6 +13,7 @@ struct Question
 	std::string description;
 	double value;
 	bool used : 1;
+	bool turnedOff : 1;
 };
 
 struct Evidence
@@ -84,4 +85,6 @@ public:
 
 	std::string getHypothesis(int index) const;
 	double getHypothesisValue(int index) const;
+
+	void setQuestionTurnedOff(int index, bool turnedOff);
 };

@@ -159,3 +159,9 @@ double les_GetHypothesisValue(les_expert_t *expert, int index)
 	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
 	return self->getHypothesisValue(index);
 }
+
+void les_SetQuestionTurnedOff(les_expert_t *expert, int index, int turnedOff)
+{
+	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	self->setQuestionTurnedOff(index, turnedOff != 0);
+}

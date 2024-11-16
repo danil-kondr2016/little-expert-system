@@ -49,6 +49,8 @@ void LittleExpertSystem::calculateValues()
 			int questionId = j.first;
 			if (m_kb.questions[questionId].used)
 				continue;
+			if (m_kb.questions[questionId].turnedOff)
+				continue;
 
 			double Py = j.second.pYes;
 			double Pn = j.second.pNo;
@@ -204,4 +206,12 @@ int LittleExpertSystem::getCurrentQuestionIndex() const
 	if (!m_running || m_currentQuestion < 0)
 		return -1;
 	return m_currentQuestion;
+}
+
+void LittleExpertSystem::setQuestionTurnedOff(int index, bool turnedOff)
+{
+	if (index < 0 || index >= m_kb.questions.size())
+		return;
+
+	m_kb.questions[index].turnedOff = turnedOff;
 }
