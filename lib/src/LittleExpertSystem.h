@@ -76,8 +76,12 @@ public:
 	int getCurrentQuestionIndex() const;
 	int getHypothesesCount() const;
 	int getQuestionsCount() const;
+
 	std::string getComment() const;
+
 	std::string getQuestion(int index) const;
+	double getQuestionValue(int index) const;
+
 	std::string getHypothesis(int index) const;
 	double getHypothesisValue(int index) const;
 };

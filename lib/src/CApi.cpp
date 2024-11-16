@@ -142,6 +142,12 @@ const char* les_GetQuestion(les_expert_t *expert, int index)
 	return strdup(self->getQuestion(index).c_str());
 }
 
+double les_GetQuestionValue(les_expert_t *expert, int index)
+{
+	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);
+	return self->getQuestionValue(index);
+}
+
 const char* les_GetHypothesis(les_expert_t *expert, int index)
 {
 	LittleExpertSystem* self = reinterpret_cast<LittleExpertSystem*>(expert);

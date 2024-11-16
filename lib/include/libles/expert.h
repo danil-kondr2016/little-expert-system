@@ -28,8 +28,12 @@ void les_Reset(les_expert_t *expert);
 int les_GetCurrentQuestionIndex(les_expert_t *expert);
 int les_GetHypothesesCount(les_expert_t *expert);
 int les_GetQuestionsCount(les_expert_t *expert);
+
 const char *les_GetComment(les_expert_t *expert);
+
 const char *les_GetQuestion(les_expert_t *expert, int index);
+double les_GetQuestionValue(les_expert_t *expert, int index);
+
 const char *les_GetHypothesis(les_expert_t *expert, int index);
 double les_GetHypothesisValue(les_expert_t *expert, int index);
 

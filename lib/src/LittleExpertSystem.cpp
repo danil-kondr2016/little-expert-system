@@ -151,7 +151,9 @@ void LittleExpertSystem::reset()
 {
 	m_currentQuestion = 0;
 	m_running = false;
+
 	m_kb.reset();
+	calculateValues();
 }
 
 int LittleExpertSystem::getHypothesesCount() const
@@ -174,6 +176,13 @@ std::string LittleExpertSystem::getQuestion(int index) const
 	if (index < 0 || index >= m_kb.questions.size())
 		return "";
 	return m_kb.questions[index].description;
+}
+
+double LittleExpertSystem::getQuestionValue(int index) const
+{
+	if (index < 0 || index >= m_kb.questions.size())
+		return nan("IVAL");
+	return m_kb.quesitons[index].value;
 }
 
 std::string LittleExpertSystem::getHypothesis(int index) const
