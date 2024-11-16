@@ -1,4 +1,8 @@
 ﻿#include "LittleExpertSystem.h"
+#include <cmath>
+
+using std::fabs;
+using std::nan;
 
 void KnowledgeBase::reset()
 {

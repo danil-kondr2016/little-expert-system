@@ -5,6 +5,9 @@
 
 #include <nowide/fstream.hpp>
 #include <nowide/iostream.hpp>
+#include <nowide/convert.hpp>
+
+#include <string.h>
 
 les_expert_t *les_expert_create(void)
 {

@@ -1,9 +1,12 @@
+#include <iomanip>
+#include <memory>
+
 #include <nowide/args.hpp>
 #include <nowide/fstream.hpp>
 #include <nowide/iostream.hpp>
-#include <iomanip>
 
 #include <argparse/argparse.hpp>
+
 #include <libles/expert.h>
 
 using std::endl;
