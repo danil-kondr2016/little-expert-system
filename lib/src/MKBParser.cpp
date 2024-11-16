@@ -4,10 +4,11 @@
 #include <memory>
 #include <algorithm>
 
-#include <fmt/format.h>
+#include <cstdio>
 
 using std::getline;
 using std::string;
+using std::snprintf;
 
 using std::unique_ptr;
 
@@ -114,9 +115,11 @@ static inline std::string trim_copy(std::string s)
 
 MKBSyntaxError MKBSyntaxErrorAt(size_t row, size_t col, std::string reason="")
 {
-	std::string what;
+	char syntax_err[512];
+	snprintf(syntax_err, 512, "Syntax error at line %zu column %zu", row, col);
 
-	what = fmt::format("Syntax error at line {} column {}", row, col);
+	std::string what;
+	what = syntax_err;
 	if (!reason.empty())
 		what += ": " + reason;
 
@@ -125,8 +128,11 @@ MKBSyntaxError MKBSyntaxErrorAt(size_t row, size_t col, std::string reason="")
 
 MKBInvalidReferenceToQuestion MKBInvalidReferenceToQuestionAt(size_t row, size_t col, int question)
 {
+	char syntax_err[512];
+	snprintf(syntax_err, 512, "Invalid reference to question %d at line %zu column %zu", question, row, col);
+	
 	std::string what;
-	what = fmt::format("Invalid reference to question {} at line {} column {}", question, row, col);
+	what = syntax_err;
 	return MKBInvalidReferenceToQuestion(what);
 }
 

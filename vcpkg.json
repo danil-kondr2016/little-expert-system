@@ -1,5 +1,5 @@
 {
   "dependencies": [
-    "fmt", "nowide", "argparse"
+    "nowide", "argparse"
   ]
 }

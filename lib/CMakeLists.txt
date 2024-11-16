@@ -4,7 +4,6 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET libles PROPERTY CXX_STANDARD 20)
 endif()
 
-find_package(fmt REQUIRED)
 find_package(nowide REQUIRED)
 
 target_sources(libles 
@@ -19,4 +18,4 @@ target_sources(libles
 )
 
 target_include_directories(libles PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(libles PRIVATE fmt::fmt nowide::nowide)
+target_link_libraries(libles PRIVATE nowide::nowide)
