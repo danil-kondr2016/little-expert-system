@@ -1,4 +1,4 @@
-add_library(libles STATIC "")
+add_library(libles OBJECT "")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET libles PROPERTY CXX_STANDARD 20)
