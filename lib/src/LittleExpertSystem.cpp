@@ -245,7 +245,7 @@ double LittleExpertSystem::getConsultationStepValue(int index) const
 	return m_steps[index].value;
 }
 
-void LittleExpertSystem::undoConsultationStep(int index) const
+void LittleExpertSystem::undoConsultationStep(int index)
 {
 	if (index < 0 || index >= m_steps.size())
 		return;
@@ -260,7 +260,7 @@ void LittleExpertSystem::undoConsultationStep(int index) const
 	for (ConsultationStep step: m_steps) {
 		m_currentQuestion = step.currentQuestion;
 
-		double normLevel = ((level - m_dunnoLevel) / (m_yesLevel - m_noLevel)) * 2.0;
+		double normLevel = ((step.value - m_dunnoLevel) / (m_yesLevel - m_noLevel)) * 2.0;
 		recalculate(normLevel);
 	}
 	m_running = nextQuestion();

@@ -90,7 +90,7 @@ public:
 
 	void setQuestionTurnedOff(int index, bool turnedOff);
 
-	int getConsultationStepCount(int index) const;
+	int getConsultationStepCount() const;
 	int getConsultationStepQuestion(int index) const;
 	double getConsultationStepValue(int index) const;
 	void undoConsultationStep(int index);
